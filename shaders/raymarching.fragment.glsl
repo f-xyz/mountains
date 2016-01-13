@@ -50,15 +50,17 @@ float fnoise(vec2 seed) {
 }
 
 vec3 world(vec3 v) {
-    float mtime = time / 4.0;
-    vec3 wv = v;
-    wv.y +=
-        0.1 * sin(2.0*wv.z - 5.0*mtime)
-      + 0.1 * sin(wv.x) * fnoise(mtime*wv.yx/100.)
-    ;
-    return join(
-        vec3(sphere(v + vec3(-5.0, -8.0, 10.0 + MAX_PATH), 20.0), 1.0, 0.0),
-        vec3(plane(wv, 10.0), 2.0, 1.0));
+//    float mtime = time / 4.0;
+//    vec3 wv = v;
+//    wv.y +=
+//        0.1 * sin(2.0*wv.z - 5.0*mtime)
+//      + 0.1 * sin(wv.x) * fnoise(mtime*wv.yx/100.)
+//    ;
+//    return join(
+//        vec3(sphere(v + vec3(-5.0, -8.0, 10.0 + MAX_PATH), 20.0), 1.0, 0.0),
+//        vec3(plane(wv, 10.0), 2.0, 1.0));
+
+    return vec3(plane(v, 10.0), 2.0, 1.0);
 }
 
 void main() {
@@ -81,13 +83,6 @@ void main() {
     //
 
     gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-
-    // stars
-
-    float starProbability = hash(pos);
-    if (starProbability < 0.001) {
-        gl_FragColor = vec4(0.2);
-    }
 
     //
 
@@ -147,6 +142,5 @@ void main() {
         }
 
     // fog
-
-    gl_FragColor += 0.4*fnoise(pos+sin(0.1*time));
+//    gl_FragColor += 0.4*fnoise(pos+sin(0.1*time));
 }
